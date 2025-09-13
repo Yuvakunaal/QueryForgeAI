@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --bg-primary: #0d1117;
+        --bg-secondary: #161b22;
+        --bg-tertiary: #21262d;
+        --accent-primary: #58a6ff;
+        --accent-secondary: #1f6feb;
+        --accent-gradient: linear-gradient(135deg, #58a6ff 0%, #1f6feb 100%);
+        --text-primary: #f0f6fc;
+        --text-secondary: #c9d1d9;
+        --text-muted: #8b949e;
+        --border-color: #30363d;
+        --border-radius: 12px;
+        --border-radius-lg: 16px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 6px 12px rgba(0, 0, 0, 0.15);
+        --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+        --success: #3fb950;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        display: flex;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Enhanced Sidebar Navigation */
+      .sidebar {
+        width: 300px;
+        background: var(--bg-secondary);
+        border-right: 1px solid var(--border-color);
+        padding: 24px 0;
+        overflow-y: auto;
+        flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        transition: var(--transition);
+        z-index: 100;
+      }
+
+      .sidebar-header {
+        padding: 0 24px 24px;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 24px;
+      }
+
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent-primary);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 16px;
+        padding: 8px 12px;
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+        background: rgba(88, 166, 255, 0.05);
+        border: 1px solid transparent;
+      }
+
+      .back-button:hover {
+        background: rgba(88, 166, 255, 0.1);
+        border-color: rgba(88, 166, 255, 0.3);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .sidebar-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 0;
+      }
+
+      .sidebar-title i {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 24px;
+      }
+
+      .sidebar-nav {
+        padding: 0 16px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 14px 16px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        border-radius: var(--border-radius);
+        margin-bottom: 6px;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .nav-item i {
+        width: 20px;
+        margin-right: 12px;
+        transition: var(--transition);
+      }
+
+      .nav-item:hover,
+      .nav-item.active {
+        background: rgba(88, 166, 255, 0.1);
+        color: var(--accent-primary);
+        transform: translateX(4px);
+      }
+
+      .nav-item.active {
+        font-weight: 600;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .nav-item::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 3px;
+        background: var(--accent-gradient);
+        opacity: 0;
+        transition: var(--transition);
+      }
+
+      .nav-item.active::before {
+        opacity: 1;
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        padding: 60px;
+        overflow-y: auto;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .doc-header {
+        margin-bottom: 48px;
+        position: relative;
+      }
+
+      .doc-header::after {
+        content: "";
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: var(--accent-gradient);
+        border-radius: 2px;
+      }
+
+      .doc-header h1 {
+        font-size: 42px;
+        font-weight: 800;
+        margin-bottom: 16px;
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.5px;
+      }
+
+      .doc-header p {
+        color: var(--text-secondary);
+        font-size: 20px;
+        line-height: 1.6;
+        max-width: 800px;
+      }
+
+      .doc-section {
+        margin-bottom: 64px;
+        scroll-margin-top: 40px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .doc-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 32px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border-color);
+        position: relative;
+      }
+
+      .section-header::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: var(--accent-gradient);
+      }
+
+      .section-header i {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 32px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .section-header h2 {
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      .doc-content {
+        color: var(--text-secondary);
+        font-size: 18px;
+        line-height: 1.7;
+      }
+
+      .doc-content p {
+        margin-bottom: 24px;
+      }
+
+      .doc-content h3 {
+        font-size: 24px;
+        margin: 36px 0 20px;
+        color: var(--text-primary);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .doc-content h3::before {
+        content: "";
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-primary);
+      }
+
+      .doc-content ul,
+      .doc-content ol {
+        margin-bottom: 28px;
+        padding-left: 28px;
+      }
+
+      .doc-content li {
+        margin-bottom: 14px;
+        position: relative;
+      }
+
+      .doc-content ul li::before {
+        content: "•";
+        color: var(--accent-primary);
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+      }
+
+      .doc-content strong {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .code-block {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 24px;
+        margin: 36px 0;
+        overflow-x: auto;
+        font-family: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo",
+          monospace;
+        font-size: 16px;
+        line-height: 1.5;
+        position: relative;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+      }
+
+      .code-block:hover {
+        border-color: var(--accent-primary);
+        box-shadow: var(--shadow-md);
+      }
+
+      .code-block::before {
+        content: "SQL";
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: var(--accent-primary);
+        color: var(--bg-primary);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 8px;
+        border-bottom-left-radius: var(--border-radius);
+        border-top-right-radius: calc(var(--border-radius) - 1px);
+      }
+
+      .code-block code {
+        color: var(--accent-primary);
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 28px;
+        margin: 40px 0;
+      }
+
+      .feature-card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-lg);
+        padding: 32px;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--accent-gradient);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.5s ease;
+      }
+
+      .feature-card:hover {
+        border-color: var(--accent-primary);
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .feature-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .feature-icon {
+        width: 70px;
+        height: 70px;
+        background: rgba(88, 166, 255, 0.1);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+        color: var(--accent-primary);
+        font-size: 28px;
+        transition: var(--transition);
+      }
+
+      .feature-card:hover .feature-icon {
+        background: var(--accent-gradient);
+        color: white;
+        transform: rotate(5deg) scale(1.05);
+      }
+
+      .feature-card h3 {
+        font-size: 22px;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+        font-weight: 700;
+      }
+
+      .feature-card p {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.6;
+        flex-grow: 1;
+      }
+
+      .example-box {
+        background: var(--bg-secondary);
+        border-left: 4px solid var(--accent-primary);
+        border-radius: var(--border-radius);
+        padding: 28px;
+        margin: 32px 0;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+      }
+
+      .example-box:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .example-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+        color: var(--accent-primary);
+        font-weight: 600;
+        font-size: 18px;
+      }
+
+      .example-header i {
+        font-size: 16px;
+      }
+
+      .tip-box {
+        background: linear-gradient(
+          135deg,
+          rgba(63, 185, 80, 0.15) 0%,
+          rgba(46, 160, 67, 0.1) 100%
+        );
+        border-left: 4px solid var(--success);
+        border-radius: var(--border-radius);
+        padding: 28px;
+        margin: 32px 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tip-box::before {
+        content: "\f0eb";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        top: -20px;
+        right: -10px;
+        font-size: 120px;
+        opacity: 0.05;
+        color: var(--success);
+        z-index: 0;
+      }
+
+      .tip-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+        color: var(--success);
+        font-weight: 600;
+        font-size: 18px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .tip-box p {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Floating action button */
+      .scroll-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--accent-gradient);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        box-shadow: var(--shadow-lg);
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+        z-index: 99;
+        border: none;
+      }
+
+      .scroll-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .scroll-to-top:hover {
+        transform: translateY(-5px) rotate(360deg);
+      }
+
+      /* Progress bar */
+      .progress-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: transparent;
+        z-index: 1000;
+      }
+
+      .progress-bar {
+        height: 4px;
+        background: var(--accent-gradient);
+        width: 0%;
+        transition: width 0.2s ease;
+      }
+
+      /* Mobile Responsiveness */
+      .mobile-nav-toggle {
+        display: none;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        background: var(--accent-gradient);
+        color: white;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        border: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        box-shadow: var(--shadow-lg);
+        transition: var(--transition);
+      }
+
+      .mobile-nav-toggle:hover {
+        transform: scale(1.1);
+      }
+
+      @media (max-width: 1200px) {
+        .main-content {
+          padding: 50px 40px;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .sidebar {
+          position: fixed;
+          left: -300px;
+          z-index: 999;
+          transition: left 0.3s ease;
+          box-shadow: var(--shadow-lg);
+        }
+
+        .sidebar.active {
+          left: 0;
+        }
+
+        .mobile-nav-toggle {
+          display: flex;
+        }
+
+        .main-content {
+          padding: 80px 30px 50px;
+        }
+
+        .doc-header h1 {
+          font-size: 36px;
+        }
+
+        .section-header h2 {
+          font-size: 28px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .doc-header h1 {
+          font-size: 32px;
+        }
+
+        .section-header h2 {
+          font-size: 26px;
+        }
+
+        .doc-content {
+          font-size: 17px;
+        }
+
+        .main-content {
+          padding: 80px 20px 40px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .main-content {
+          padding: 80px 16px 40px;
+        }
+
+        .doc-header h1 {
+          font-size: 28px;
+        }
+
+        .section-header h2 {
+          font-size: 24px;
+        }
+
+        .feature-card {
+          padding: 24px;
+        }
+
+        .feature-icon {
+          width: 60px;
+          height: 60px;
+          font-size: 24px;
+        }
+
+        .example-box,
+        .tip-box {
+          padding: 20px;
+        }
+
+        .scroll-to-top {
+          bottom: 20px;
+          right: 20px;
+          width: 45px;
+          height: 45px;
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <button class="mobile-nav-toggle" id="mobileToggle">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <button class="scroll-to-top" id="scrollToTop">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="/" class="back-button">
+          <i class="fas fa-arrow-left"></i> Back to App
+        </a>
+        <div class="sidebar-title">
+          <i class="fas fa-book"></i> Documentation
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#overview" class="nav-item active">
+          <i class="fas fa-info-circle"></i> Overview
+        </a>
+        <a href="#features" class="nav-item">
+          <i class="fas fa-star"></i> Features
+        </a>
+        <a href="#how-to-use" class="nav-item">
+          <i class="fas fa-book"></i> How to Use
+        </a>
+        <a href="#examples" class="nav-item">
+          <i class="fas fa-code"></i> Examples
+        </a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="doc-header">
+        <h1>SQL PLAYGROUND Documentation</h1>
+        <p>
+          Discover how to transform natural language queries into precise SQL
+          commands with our powerful AI-powered tool
+        </p>
+      </div>
+
+      <section id="overview" class="doc-section">
+        <div class="section-header">
+          <i class="fas fa-info-circle"></i>
+          <h2>Overview</h2>
+        </div>
+        <div class="doc-content">
+          <p>
+            The SQL Playground with NL to SQL Converter is an innovative web
+            application designed to bridge the gap between natural language and
+            database queries. It empowers users to interact with MySQL databases
+            using plain English, eliminating the need to learn complex SQL
+            syntax while providing powerful database exploration capabilities.
+          </p>
+
+          <p>This comprehensive tool is perfect for:</p>
+          <ul>
+            <li>
+              Business analysts who need to query databases without SQL
+              knowledge
+            </li>
+            <li>
+              Developers who want to quickly prototype and test database queries
+            </li>
+            <li>
+              Students learning both database concepts and natural language
+              processing
+            </li>
+            <li>
+              Data professionals who need to quickly explore unfamiliar database
+              structures
+            </li>
+            <li>
+              Anyone who wants to simplify database interactions using natural
+              language
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="features" class="doc-section">
+        <div class="section-header">
+          <i class="fas fa-star"></i>
+          <h2>Features</h2>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-table"></i>
+            </div>
+            <h3>Database Explorer</h3>
+            <p>
+              Browse all available tables in your MySQL database with a clean,
+              intuitive interface. Instantly see your database structure and
+              navigate between different tables with ease.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-list-alt"></i>
+            </div>
+            <h3>Schema Inspector</h3>
+            <p>
+              Examine detailed schema information for each table, including
+              column names, data types, constraints, and primary keys.
+              Understand your database structure at a glance.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            <h3>Data Preview</h3>
+            <p>
+              View actual data from any table with a powerful, scrollable data
+              grid. Explore your data without writing any SQL code, with support
+              for large datasets.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-terminal"></i>
+            </div>
+            <h3>Query Runner</h3>
+            <p>
+              Execute custom SQL queries with a built-in editor. View results
+              instantly in a formatted data table with proper type formatting
+              and easy navigation.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-language"></i>
+            </div>
+            <h3>AI-Powered NL to SQL</h3>
+            <p>
+              Transform natural language questions into accurate SQL queries
+              using advanced AI technology with the Mistral model. Supports
+              complex queries with multiple conditions and intelligent date
+              handling.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-plug"></i>
+            </div>
+            <h3>Connection Management</h3>
+            <p>
+              Easily configure and manage your MySQL database connections with
+              an intuitive settings panel. Visual connection status indicator
+              keeps you informed of your database connection state.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="how-to-use" class="doc-section">
+        <div class="section-header">
+          <i class="fas fa-book"></i>
+          <h2>How to Use</h2>
+        </div>
+        <div class="doc-content">
+          <h3>Getting Started</h3>
+          <p>
+            When you first open the application, you'll need to configure your
+            database connection. Click the settings icon in the top right corner
+            and enter your MySQL database credentials. Once connected, you can
+            explore all the features of the SQL Playground.
+          </p>
+
+          <h3>Configuring Database Connection</h3>
+          <ol>
+            <li>Click the settings (gear) icon in the header</li>
+            <li>
+              Enter your MySQL host, username, password, and database name
+            </li>
+            <li>Click "Save Settings" to test the connection</li>
+            <li>
+              The connection status indicator will show green when successfully
+              connected
+            </li>
+          </ol>
+
+          <h3>Viewing Table Data</h3>
+          <ol>
+            <li>Navigate to the "View Table Data" section</li>
+            <li>
+              Select a table from the dropdown menu (populated from your
+              database)
+            </li>
+            <li>Click the "Load Data" button to retrieve records</li>
+            <li>Scroll through the results to view all data</li>
+            <li>Use horizontal scrolling if the table has many columns</li>
+          </ol>
+
+          <h3>Running Custom Queries</h3>
+          <ol>
+            <li>Go to the "Run Custom Query" section</li>
+            <li>Type or paste your SQL query into the text area</li>
+            <li>Click "Execute Query" to run the command</li>
+            <li>View the results in the formatted table below the editor</li>
+          </ol>
+
+          <div class="code-block">
+            <code
+              >-- Example: Get customers from USA SELECT * FROM customers WHERE
+              country = 'USA';</code
+            >
+          </div>
+
+          <h3>Natural Language to SQL Conversion</h3>
+          <ol>
+            <li>Navigate to the "Natural Language to SQL" section</li>
+            <li>Select the target table from the dropdown menu</li>
+            <li>Type your question in plain English in the text area</li>
+            <li>Click "Convert to SQL" to generate the query using AI</li>
+            <li>Review the generated SQL code</li>
+            <li>The results will automatically display below the SQL output</li>
+          </ol>
+
+          <div class="tip-box">
+            <div class="tip-header">
+              <i class="fas fa-lightbulb"></i>
+              <span>Pro Tip</span>
+            </div>
+            <p>
+              The AI model intelligently handles date queries. If you mention a
+              month or year, it will select the entire period. For example,
+              "sales in January 2025" will return all records from that entire
+              month.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="examples" class="doc-section">
+        <div class="section-header">
+          <i class="fas fa-code"></i>
+          <h2>Examples</h2>
+        </div>
+        <div class="doc-content">
+          <p>
+            Here are some practical examples of natural language queries and the
+            SQL they generate. The AI model understands various query types
+            including filtering, sorting, aggregation, and date operations:
+          </p>
+
+          <div class="example-box">
+            <div class="example-header">
+              <i class="fas fa-arrow-right"></i>
+              <span>Natural Language Input</span>
+            </div>
+            <p>"Show me all customers from California ordered by last name"</p>
+
+            <div class="example-header">
+              <i class="fas fa-database"></i>
+              <span>Generated SQL</span>
+            </div>
+            <div class="code-block">
+              <code
+                >SELECT * FROM customers WHERE state = 'California' ORDER BY
+                last_name;</code
+              >
+            </div>
+          </div>
+
+          <div class="example-box">
+            <div class="example-header">
+              <i class="fas fa-arrow-right"></i>
+              <span>Natural Language Input</span>
+            </div>
+            <p>
+              "Find products with price greater than $100 in the electronics
+              category"
+            </p>
+
+            <div class="example-header">
+              <i class="fas fa-database"></i>
+              <span>Generated SQL</span>
+            </div>
+            <div class="code-block">
+              <code
+                >SELECT * FROM products WHERE price > 100 AND category =
+                'electronics';</code
+              >
+            </div>
+          </div>
+
+          <div class="example-box">
+            <div class="example-header">
+              <i class="fas fa-arrow-right"></i>
+              <span>Natural Language Input</span>
+            </div>
+            <p>"Show total sales by month for 2024"</p>
+
+            <div class="example-header">
+              <i class="fas fa-database"></i>
+              <span>Generated SQL</span>
+            </div>
+            <div class="code-block">
+              <code
+                >SELECT MONTH(sale_date) AS month, SUM(amount) AS total_sales
+                FROM sales WHERE YEAR(sale_date) = 2024 GROUP BY
+                MONTH(sale_date);</code
+              >
+            </div>
+          </div>
+
+          <div class="example-box">
+            <div class="example-header">
+              <i class="fas fa-arrow-right"></i>
+              <span>Natural Language Input</span>
+            </div>
+            <p>"Customers who made purchases in the last 30 days"</p>
+
+            <div class="example-header">
+              <i class="fas fa-database"></i>
+              <span>Generated SQL</span>
+            </div>
+            <div class="code-block">
+              <code
+                >SELECT DISTINCT customers.* FROM customers JOIN orders ON
+                customers.id = orders.customer_id WHERE orders.order_date >=
+                DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY);</code
+              >
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <div class="tip-header">
+              <i class="fas fa-lightbulb"></i>
+              <span>Tips for Better Results</span>
+            </div>
+            <p>
+              Be specific in your natural language queries. Instead of "show me
+              customers," try "show me customers from New York who signed up in
+              the last month and have made more than 5 purchases." The more
+              specific you are, the more accurate the generated SQL will be.
+              Include table names, specific columns, filters, and sorting
+              requirements for optimal results.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // Mobile sidebar toggle
+      document
+        .getElementById("mobileToggle")
+        .addEventListener("click", function () {
+          document.getElementById("sidebar").classList.toggle("active");
+          this.classList.toggle("active");
+        });
+
+      // Smooth scrolling for navigation
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        item.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          // Remove active class from all items
+          document.querySelectorAll(".nav-item").forEach((navItem) => {
+            navItem.classList.remove("active");
+          });
+
+          // Add active class to clicked item
+          this.classList.add("active");
+
+          // Scroll to section
+          const targetId = this.getAttribute("href");
+          const targetSection = document.querySelector(targetId);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: "smooth" });
+          }
+
+          // Close sidebar on mobile after selection
+          if (window.innerWidth < 1024) {
+            document.getElementById("sidebar").classList.remove("active");
+            document.getElementById("mobileToggle").classList.remove("active");
+          }
+        });
+      });
+
+      // Update active nav item on scroll
+      window.addEventListener("scroll", function () {
+        const sections = document.querySelectorAll(".doc-section");
+        const navItems = document.querySelectorAll(".nav-item");
+
+        let currentSection = "";
+
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          if (pageYOffset >= sectionTop - 100) {
+            currentSection = section.getAttribute("id");
+          }
+        });
+
+        navItems.forEach((item) => {
+          item.classList.remove("active");
+          if (item.getAttribute("href") === "#" + currentSection) {
+            item.classList.add("active");
+          }
+        });
+
+        // Show/hide scroll to top button
+        const scrollToTopBtn = document.getElementById("scrollToTop");
+        if (window.pageYOffset > 500) {
+          scrollToTopBtn.classList.add("visible");
+        } else {
+          scrollToTopBtn.classList.remove("visible");
+        }
+
+        // Update progress bar
+        const winHeight = window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight;
+        const scrollTop = window.pageYOffset;
+        const trackLength = docHeight - winHeight;
+        const progress = (scrollTop / trackLength) * 100;
+        document.getElementById("progressBar").style.width = progress + "%";
+
+        // Animate sections on scroll
+        animateOnScroll();
+      });
+
+      // Scroll to top functionality
+      document
+        .getElementById("scrollToTop")
+        .addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+      // Animate elements on scroll
+      function animateOnScroll() {
+        const sections = document.querySelectorAll(".doc-section");
+
+        sections.forEach((section) => {
+          const sectionTop = section.getBoundingClientRect().top;
+          const triggerPoint = window.innerHeight * 0.85;
+
+          if (sectionTop < triggerPoint) {
+            section.classList.add("visible");
+          }
+        });
+      }
+
+      // Initialize animations on page load
+      window.addEventListener("load", function () {
+        animateOnScroll();
+
+        // Animate feature cards with staggered delay
+        const featureCards = document.querySelectorAll(".feature-card");
+        featureCards.forEach((card, index) => {
+          card.style.transitionDelay = `${index * 0.1}s`;
+        });
+      });
+    </script>
+  </body>
+</html>

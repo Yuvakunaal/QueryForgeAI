@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQL Playground</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="templates/style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="app-header">
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-database"></i>
+          </div>
+          <div class="logo-text">
+            <h1>SQL Playground + NL to SQL</h1>
+            <p>Transform natural language queries into SQL commands</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="btn-icon" title="Settings" onclick="openSettings()">
+            <i class="fas fa-cog"></i>
+          </button>
+          <a href="/about">
+            <button class="btn-icon" title="Documentation">
+              <i class="fas fa-question-circle"></i>
+            </button>
+          </a>
+        </div>
+      </header>
+
+      <div class="app-content">
+        <div class="sidebar">
+          <div class="sidebar-section">
+            <div class="section-header">
+              <i class="fas fa-table"></i>
+              <h2>Database Tables</h2>
+            </div>
+            <div class="section-content">
+              <div id="tables-list" class="tables-container"></div>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="section-header">
+              <i class="fas fa-list-alt"></i>
+              <h2>Table Schema</h2>
+            </div>
+            <div class="section-content">
+              <select id="schema-select" class="styled-select">
+                <option value="">Select a table</option>
+              </select>
+              <div id="schema-details" class="schema-container"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Settings Modal -->
+        <div id="settingsModal" class="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Database Settings</h2>
+              <button class="close-btn" onclick="closeSettings()">
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="dbHost">Host</label>
+                <input
+                  type="text"
+                  id="dbHost"
+                  placeholder="localhost"
+                  value="localhost"
+                />
+              </div>
+              <div class="form-group">
+                <label for="dbUser">Username</label>
+                <input
+                  type="text"
+                  id="dbUser"
+                  placeholder="root"
+                  value="root"
+                />
+              </div>
+              <div class="form-group">
+                <label for="dbPassword">Password</label>
+                <input type="password" id="dbPassword" placeholder="Password" />
+              </div>
+              <div class="form-group">
+                <label for="dbName">Database Name</label>
+                <input
+                  type="text"
+                  id="dbName"
+                  placeholder="salesdb"
+                  value="salesdb"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn-secondary" onclick="closeSettings()">
+                Cancel
+              </button>
+              <button class="btn-primary" onclick="saveSettings()">
+                Save Settings
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="main-content">
+          <div class="main-content-inner">
+            <div class="card">
+              <div class="card-header">
+                <i class="fas fa-eye"></i>
+                <h2>View Table Data</h2>
+              </div>
+              <div class="card-body">
+                <div class="input-group">
+                  <select id="table-select" class="styled-select">
+                    <option value="">Select a table</option>
+                  </select>
+                  <button class="btn-primary" onclick="loadTableData()">
+                    <i class="fas fa-download"></i> Load Data
+                  </button>
+                </div>
+                <div id="table-data" class="data-container">
+                  <div class="table-scroll-container">
+                    <div class="table-wrapper">
+                      <!-- Table content will be inserted here by JavaScript -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <i class="fas fa-terminal"></i>
+                <h2>Run Custom Query</h2>
+              </div>
+              <div class="card-body">
+                <textarea
+                  id="custom-query"
+                  class="styled-textarea"
+                  placeholder="SELECT * FROM customers WHERE country = 'USA';"
+                ></textarea>
+                <div class="input-group">
+                  <button class="btn-primary" onclick="runCustomQuery()">
+                    <i class="fas fa-play"></i> Execute Query
+                  </button>
+                </div>
+                <div id="query-results" class="data-container">
+                  <div class="table-scroll-container">
+                    <div class="table-wrapper">
+                      <!-- Query results will be inserted here by JavaScript -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card featured">
+              <div class="card-header">
+                <i class="fas fa-language"></i>
+                <h2>Natural Language to SQL</h2>
+              </div>
+              <div class="card-body">
+                <div class="input-group">
+                  <select id="nl-table-select" class="styled-select">
+                    <option value="">Select a table</option>
+                  </select>
+                </div>
+                <textarea
+                  id="nl-input"
+                  class="styled-textarea"
+                  placeholder="E.g.: Show me all customers from USA who made purchases in the last month"
+                ></textarea>
+                <div class="input-group">
+                  <button class="btn-featured" onclick="convertNlToSql()">
+                    <i class="fas fa-magic"></i> Convert to SQL
+                  </button>
+                </div>
+
+                <div id="loader" class="loader-container">
+                  <div class="loader">
+                    <div class="loader-spinner"></div>
+                    <p>Generating SQL query...</p>
+                  </div>
+                </div>
+
+                <div id="sql-output" class="sql-output"></div>
+                <div id="nl-results" class="data-container featured-results">
+                  <div class="table-scroll-container">
+                    <div class="table-wrapper">
+                      <!-- NL results will be inserted here by JavaScript -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connection status indicator -->
+    <div class="connection-status">
+      <div class="status-indicator" id="statusIndicator"></div>
+      <span id="statusText">Connected</span>
+    </div>
+
+    <!-- Floating action button -->
+    <button class="floating-action" onclick="scrollToTop()">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Mobile sidebar toggle -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Overlay for mobile sidebar -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.querySelector(".sidebar");
+        const overlay = document.querySelector(".sidebar-overlay");
+        sidebar.classList.toggle("active");
+        overlay.classList.toggle("active");
+      }
+
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // Check connection status with proper timeout handling
+      async function checkConnection() {
+        const statusIndicator = document.getElementById("statusIndicator");
+        const statusText = document.getElementById("statusText");
+
+        try {
+          // Use AbortController for timeout
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+          const response = await fetch("/api/check-connection", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dbSettings),
+            signal: controller.signal,
+          });
+
+          clearTimeout(timeoutId);
+
+          if (response.ok) {
+            statusIndicator.classList.remove("offline");
+            statusText.textContent = "Connected";
+            updateConnectionStatus(true);
+          } else {
+            throw new Error("Server error");
+          }
+        } catch (error) {
+          statusIndicator.classList.add("offline");
+          statusText.textContent = "Offline - Configure settings";
+          updateConnectionStatus(false);
+        }
+      }
+
+      // Check connection on load and periodically
+      document.addEventListener("DOMContentLoaded", function () {
+        checkConnection();
+        setInterval(checkConnection, 30000);
+      });
+    </script>
+    <script src="templates/script.js"></script>
+  </body>
+</html>
