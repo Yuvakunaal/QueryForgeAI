@@ -1,8 +1,8 @@
-# SQL Playground with NL to SQL Converter
+# QueryForgeAI - MySQL Playground with NL to SQL Converter
 ![AI-Powered](https://img.shields.io/badge/AI-Powered-blue?style=for-the-badge&logo=ai) ![FastAPI](https://img.shields.io/badge/FastAPI-0.68.0-green?style=for-the-badge&logo=fastapi) ![Ollama](https://img.shields.io/badge/Ollama-Mistral-informational?style=for-the-badge)
 
 
-SQL Playground is a powerful web application designed to help users, developers, and analysts interact with MySQL databases using natural language queries. It makes SQL accessible to non-technical users while providing advanced features for developers by leveraging AI-powered NL to SQL conversion with the Mistral model.
+MYSQL Playground is a powerful web application designed to help users, developers, and analysts interact with MySQL databases using natural language queries. It makes SQL accessible to non-technical users while providing advanced features for developers by leveraging AI-powered NL to SQL conversion with the Mistral model.
 
 ## 🚀 Features
 
