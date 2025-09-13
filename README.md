@@ -29,8 +29,8 @@ Follow these steps to set up and run SQL Playground:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/Yuvakunaal/SQL-Playground.git
-   cd SQL-Playground
+   git clone https://github.com/Yuvakunaal/QueryForgeAI.git
+   cd QueryForgeAI
    ```
 
 2. **Install Python Dependencies**
